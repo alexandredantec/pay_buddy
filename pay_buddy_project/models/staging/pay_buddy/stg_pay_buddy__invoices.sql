@@ -20,7 +20,10 @@ renamed AS (
         Currency AS invoice_currency,
 
         -- floats
-        CAST(Amount AS FLOAT64) AS invoice_amount
+        CAST(Amount AS FLOAT64) AS invoice_amount,
+
+        --dates
+        PARSE_DATE('%d/%m/%Y',  Due_Date) AS repayment_due_date
 
     FROM source
 

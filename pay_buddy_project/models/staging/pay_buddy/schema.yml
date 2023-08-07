@@ -111,6 +111,10 @@ models:
         description: "The amount to be repaid to Pay Buddy"
         tests:
           - not_null
+      - name: repayment_due_date
+        description: "The date by which the invoice amount is to be repaid to Pay Buddy"
+        tests:
+          - not_null
 
   - name: stg_pay_buddy__orders.sql
     description: "A table to keep track of orders made by buyers to merchants"
