@@ -10,7 +10,7 @@ WITH companies AS (
   FROM {{ref('stg_pay_buddy__company_type')}} 
 )
 
-, companies_and_types AS (
+, companies_and_company_types AS (
   SELECT
   c.company_id,
   c.company_name,
@@ -21,4 +21,4 @@ WITH companies AS (
   INNER JOIN company_types AS ct ON ct.company_type_id = c.company_type_id
 )
 
-SELECT * FROM companies_and_types
+SELECT * FROM companies_and_company_types
