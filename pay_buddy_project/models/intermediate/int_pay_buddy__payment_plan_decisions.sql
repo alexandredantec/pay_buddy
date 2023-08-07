@@ -18,7 +18,7 @@ SELECT *
 FROM {{ref('stg_pay_buddy__decisions')}}
 )
 
-, payment_plan_decisions AS (
+, payment_plans_with_decisions AS (
 SELECT 
 p.payment_plan_id,
 p.order_id,
@@ -32,4 +32,4 @@ LEFT JOIN payment_plan_templates AS pp ON pp.payment_plan_template_id = p.paymen
 
 )
 
-SELECT * FROM payment_plan_decisions
+SELECT * FROM payment_plans_with_decisions
