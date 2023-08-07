@@ -83,7 +83,7 @@ models:
         tests:
           - not_null
       - name: decision_reason
-        description: "The precise reason for a decision if it is refused (will be 'accept' if the payment plan is accepted)"
+        description: "The precise reason for a decision if it is refused (or 'accept' if the payment plan is accepted)"
         tests:
           - not_null
 
@@ -100,7 +100,7 @@ models:
         tests:
           - not_null
       - name: payment_plan_id
-        description: "The unique identifier to identify the payment plan chosen)"
+        description: "The unique identifier to identify the payment plan chosen"
         tests:
           - not_null
       - name: invoice_currency

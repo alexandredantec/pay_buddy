@@ -10,6 +10,7 @@ WITH companies AS (
   FROM {{ref('stg_pay_buddy__company_type')}} 
 )
 
+
 , companies_with_type AS (
   SELECT
   c.company_id,
