@@ -35,3 +35,59 @@ models:
           - not_null
       - name: repayment_date
         description: "The date on which this repayment is made"
+  - name: fact_orders.sql
+    description: "Final orders made by buyers once a decision is taken"
+    columns:
+      - name: order_id
+        description: "The unique identifier identifying an order"
+        tests:
+          - unique
+          - not_null
+      - name: buyer_id
+        description: "The unique identifier to identify the buyer"
+        tests:
+          - not_null
+      - name: merchant_id
+        description: "The unique identifier to identify the payment plan chosen"
+        tests:
+          - not_null
+      - name: agreement_id
+        description: "The amount to be repaid to Pay Buddy"
+        tests:
+          - not_null
+      - name: order_amount
+        description: "The amount of the order"
+        tests:
+          - not_null
+      - name: order_date
+        description: "The amount repaid (can be total or partial)"
+        tests:
+          - not_null
+      - name: is_accepted
+        description: "The currency in which the invoice is issued"
+        tests:
+          - not_null
+  - name: fact_fees.sql
+    description: "Final orders made by buyers once a decision is taken"
+    columns:
+      - name: fee_id
+        description: "The unique identifier identifying an order"
+        tests:
+          - unique
+          - not_null
+      - name: merchant_id
+        description: "The unique identifier to identify the payment plan chosen"
+        tests:
+          - not_null
+      - name: fee_percentage
+        description: "The amount to be repaid to Pay Buddy"
+        tests:
+          - not_null
+      - name: order_amount
+        description: "The amount of the order"
+        tests:
+          - not_null
+      - name: fee
+        description: "The amount of the fee"
+        tests:
+          - not_null
