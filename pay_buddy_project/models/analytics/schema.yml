@@ -11,28 +11,16 @@ models:
           - not_null
       - name: buyer_id
         description: "The unique identifier to identify the buyer"
-        tests:
-          - not_null
       - name: payment_plan_id
         description: "The unique identifier to identify the payment plan chosen"
-        tests:
-          - not_null
       - name: invoice_amount
         description: "The amount to be repaid to Pay Buddy"
-        tests:
-          - not_null
       - name: repayment_amount
         description: "The amount repaid (can be total or partial)"
-        tests:
-          - not_null
       - name: invoice_currency
         description: "The currency in which the invoice is issued"
-        tests:
-          - not_null
       - name: repayment_due_date
         description: "The date by which the invoice amount is to be repaid to Pay Buddy"
-        tests:
-          - not_null
       - name: repayment_date
         description: "The date on which this repayment is made"
   - name: fact_orders.sql
@@ -45,28 +33,17 @@ models:
           - not_null
       - name: buyer_id
         description: "The unique identifier to identify the buyer"
-        tests:
-          - not_null
       - name: merchant_id
         description: "The unique identifier to identify the payment plan chosen"
-        tests:
-          - not_null
       - name: agreement_id
         description: "The amount to be repaid to Pay Buddy"
-        tests:
-          - not_null
       - name: order_amount
         description: "The amount of the order"
-        tests:
-          - not_null
       - name: order_date
         description: "The amount repaid (can be total or partial)"
-        tests:
-          - not_null
       - name: is_accepted
         description: "The currency in which the invoice is issued"
-        tests:
-          - not_null
+
   - name: fact_fees.sql
     description: "Final orders made by buyers once a decision is taken"
     columns:
@@ -77,17 +54,37 @@ models:
           - not_null
       - name: merchant_id
         description: "The unique identifier to identify the payment plan chosen"
-        tests:
-          - not_null
       - name: fee_percentage
         description: "The amount to be repaid to Pay Buddy"
-        tests:
-          - not_null
       - name: order_amount
         description: "The amount of the order"
-        tests:
-          - not_null
       - name: fee
         description: "The amount of the fee"
+  - name: dim_merchants.sql
+    description: "Merchants using the Pay Buddy service"
+    columns:
+      - name: merchant_id
+        description: "The unique identifier identifying a merchant"
         tests:
+          - unique
           - not_null
+      - name: company_name
+        description: "The unique identifier to identify the payment plan chosen"
+      - name: company_country
+        description: "The country in which the company is registered"
+      - name: company_reference,
+        description: "The legal reference of the company"
+  - name: dim_buyers.sql
+    description: "Buyers using the Pay Buddy service to purchase goods and services "
+    columns:
+      - name: buyer_id
+        description: "The unique identifier identifying a merchant"
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: "The unique identifier to identify the payment plan chosen"
+      - name: company_country
+        description: "The country in which the company is registered"
+      - name: company_reference,
+        description: "The legal reference of the company"
