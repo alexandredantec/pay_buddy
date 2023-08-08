@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: fact_invoices.sql
+    description: "Invoices issued to buyers once a payment plan is accepted"
+    columns:
+      - name: invoice_id
+        description: "The unique identifier identifying an invoice"
+        tests:
+          - unique
+          - not_null
+      - name: buyer_id
+        description: "The unique identifier to identify the buyer"
+        tests:
+          - not_null
+      - name: payment_plan_id
+        description: "The unique identifier to identify the payment plan chosen"
+        tests:
+          - not_null
+      - name: invoice_amount
+        description: "The amount to be repaid to Pay Buddy"
+        tests:
+          - not_null
+      - name: repayment_amount
+        description: "The amount repaid (can be total or partial)"
+        tests:
+          - not_null
+      - name: invoice_currency
+        description: "The currency in which the invoice is issued"
+        tests:
+          - not_null
+      - name: repayment_due_date
+        description: "The date by which the invoice amount is to be repaid to Pay Buddy"
+        tests:
+          - not_null
+      - name: repayment_date
+        description: "The date on which this repayment is made"
