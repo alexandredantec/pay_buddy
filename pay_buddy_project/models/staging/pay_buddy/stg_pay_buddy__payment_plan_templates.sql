@@ -13,7 +13,7 @@ renamed AS (
     SELECT
         -- ids
         ID AS payment_plan_template_id,
-        Agreement_ID AS agreement_id,
+        CONCAT('C',Agreement_ID) AS agreement_id,
 
         -- integers
         CAST(Term AS INT64) AS term_in_days
