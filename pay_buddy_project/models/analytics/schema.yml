@@ -17,6 +17,8 @@ models:
         description: "The amount to be repaid to Pay Buddy"
       - name: repayment_amount
         description: "The amount repaid (can be total or partial)"
+      - name: outstanding_amount
+        description: "The amount repaid (can be total or partial)"
       - name: invoice_currency
         description: "The currency in which the invoice is issued"
       - name: repayment_due_date

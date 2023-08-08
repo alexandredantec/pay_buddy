@@ -28,6 +28,7 @@ GROUP BY 1
   i.payment_plan_id,
   i.invoice_amount,
   COALESCE(repayment_amount, 0) AS repayment_amount,
+  invoice_amount - repayment_amount AS outstanding_amount,
   i.invoice_currency,
   i.repayment_due_date,
   r.repayment_date
