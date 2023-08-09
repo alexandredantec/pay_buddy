@@ -1,9 +1,9 @@
--- fact_fees.sql
+-- fees.sql
 
 WITH orders AS (
 
 SELECT * 
-FROM {{ref('fact_orders')}}
+FROM {{ref('orders')}}
 )
 
 , agreements AS (

@@ -1,4 +1,4 @@
--- fact_orders.sql
+-- orders.sql
 
 WITH payment_plan_decisions AS (
 
