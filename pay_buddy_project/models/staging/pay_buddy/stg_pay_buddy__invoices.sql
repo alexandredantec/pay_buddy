@@ -14,7 +14,7 @@ renamed AS (
         -- ids
         ID AS invoice_id,
         Buyer_ID AS buyer_id,
-        Payment_Plan_ID AS payment_plan_id,
+        CONCAT('PP-', Payment_Plan_ID) AS payment_plan_id,
 
         -- strings
         Currency AS invoice_currency,
