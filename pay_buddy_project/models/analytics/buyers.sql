@@ -1,4 +1,4 @@
--- dim_buyers.sql
+-- buyers.sql
 
 WITH buyer_companies AS (
     SELECT *

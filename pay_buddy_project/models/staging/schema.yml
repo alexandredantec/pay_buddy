@@ -13,6 +13,7 @@ sources:
       - name: raw_payment_plan_templates
       - name: raw_payment_plans
       - name: raw_repayments
+      - name: exchange_rates_base_gbp
 
 models:
   - name: stg_pay_buddy__agreements.sql
@@ -207,3 +208,25 @@ models:
         description: "The date on which this repayment is made"
         tests:
           - not_null
+
+  - name: stg_currencies__gbp_exchange_rates.sql
+    description: "A table to keep track of the exchange rate to GBP for the various currencies buyers may pay in"
+    columns:
+      - name: unique_id
+        description: "The unique identifier for this table"
+        tests:
+          - unique
+          - not_null
+      - name: base_currency
+        description: "The currency in which the transaction takes place"
+        tests:
+          - not_null
+      - name: gbp_exchange_rate
+        description: "The conversion rate for GBP"
+        tests:
+          - not_null
+      - name: exchange_rate_date
+        description: "The date for which the exchange rate is valid"
+        tests:
+          - not_null
+

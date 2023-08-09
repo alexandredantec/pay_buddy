@@ -1,4 +1,4 @@
--- dim_merchants.sql
+-- merchants.sql
 
 WITH merchant_companies AS (
   SELECT *

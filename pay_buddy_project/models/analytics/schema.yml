@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_invoices.sql
+  - name: invoices.sql
     description: "Invoices issued to buyers once a payment plan is accepted"
     columns:
       - name: invoice_id
@@ -23,7 +23,7 @@ models:
         description: "The date by which the invoice amount is to be repaid to Pay Buddy"
       - name: repayment_date
         description: "The date on which this repayment is made"
-  - name: fact_orders.sql
+  - name: orders.sql
     description: "Final orders made by buyers once a decision is taken"
     columns:
       - name: order_id
@@ -44,7 +44,7 @@ models:
       - name: is_accepted
         description: "The currency in which the invoice is issued"
 
-  - name: fact_fees.sql
+  - name: fees.sql
     description: "Final orders made by buyers once a decision is taken"
     columns:
       - name: fee_id
@@ -60,7 +60,7 @@ models:
         description: "The amount of the order"
       - name: fee
         description: "The amount of the fee"
-  - name: dim_merchants.sql
+  - name: merchants.sql
     description: "Merchants using the Pay Buddy service"
     columns:
       - name: merchant_id
@@ -74,7 +74,7 @@ models:
         description: "The country in which the company is registered"
       - name: company_reference,
         description: "The legal reference of the company"
-  - name: dim_buyers.sql
+  - name: buyers.sql
     description: "Buyers using the Pay Buddy service to purchase goods and services "
     columns:
       - name: buyer_id
