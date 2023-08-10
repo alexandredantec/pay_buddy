@@ -1,9 +1,4 @@
-# Table of contents
-1. [Introduction](# pay_buddy)
-2. [Purpose of the project](## 1. Purpose of the project)
-3. [Business concept and questions](## 2. Business concept and questions)
-
-# pay_buddy
+# Introduction
 
 Hi and welcome to this practice dbt project. 
 
