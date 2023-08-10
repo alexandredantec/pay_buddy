@@ -1,17 +1,15 @@
 -- orders.sql
 
 WITH payment_plan_decisions AS (
-
 SELECT * 
 FROM {{ref('int_pay_buddy__payment_plan_decisions')}}
 )
 
 , orders AS (
-
 SELECT *
 FROM {{ref('stg_pay_buddy__orders')}}
 )
-
+-- retrieve whether an order has at least one accepted payment plan
 , payment_plan_decisions_grouped_by_order AS (
 SELECT 
 order_id,
