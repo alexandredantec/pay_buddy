@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: int_pay_buddy__companies_and_types.sql
+  - name: int_pay_buddy__companies_and_types
     description: Companies known to Pay Buddy service with their type described. 
     columns:
       - name: company_id
@@ -30,7 +30,7 @@ models:
         tests:
           - not_null
 
-  - name: int_pay_buddy__payment_plan_decisions.sql
+  - name: int_pay_buddy__payment_plan_decisions
     description: Payment plans offered with the decisions taken by Pay Buddy's credit score engine. 
     columns:
       - name: payment_plan_id

@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: invoices.sql
+  - name: invoices
     description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted.
     columns:
       - name: invoice_id
@@ -23,7 +23,7 @@ models:
         description: The date by which the invoice amount is to be repaid in full.
       - name: repayment_date
         description: The date on which a repayment is made.
-  - name: orders.sql
+  - name: orders
     description: Orders made by buyers on marketplaces operated by merchants. 
     columns:
       - name: order_id
@@ -46,7 +46,7 @@ models:
       - name: is_accepted
         description: Whether an order is accepted or refused by Pay Buddy's decision engine. 
 
-  - name: fees.sql
+  - name: fees
     description: Fees paid by merchants for Pay Buddy's service. 
     columns:
       - name: fee_id
@@ -63,7 +63,7 @@ models:
       - name: fee
         description: The amount of the fee paid by the merchant to Pay Buddy. 
  
-  - name: merchants.sql
+  - name: merchants
     description: Merchants using the Pay Buddy service to accept payments. 
     columns:
       - name: merchant_id
@@ -84,7 +84,7 @@ models:
         tests:
           - not_null
   
-  - name: buyers.sql
+  - name: buyers
     description: "Buyers using the Pay Buddy service to purchase goods and services "
     columns:
       - name: buyer_id

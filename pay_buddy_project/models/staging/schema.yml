@@ -5,17 +5,26 @@ sources:
     description: A replica of the production database used by the backend of Pay Buddy's product.
     tables:
       - name: raw_agreements
+        description: The agreements between merchants and Pay Buddy. 
       - name: raw_companies
+        description: Companies Pay Buddy has contact with. Contains both buyers and merchants. 
       - name: raw_company_type
+        description: A lookup table referencing whether Pay Buddy knows a company as a merchant or as a buyer.
       - name: raw_decisions
+        description: The decisions taken by Pay Buddy's credit engine.
       - name: raw_invoices
+        description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted.
       - name: raw_orders
+        description: Orders made by buyers on marketplaces operated by merchants.
       - name: raw_payment_plan_templates
+        description: Payment plan templates made available to merchants.
       - name: raw_payment_plans
+        description: The payment plans buyers may pick from. 
       - name: raw_repayments
+        description: Repayments made to Pay Buddy by buyers. 
 
 models:
-  - name: stg_pay_buddy__agreements.sql
+  - name: stg_pay_buddy__agreements
     description: The agreements between merchants and Pay Buddy. 
     columns:
       - name: agreement_id
@@ -32,7 +41,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__companies.sql
+  - name: stg_pay_buddy__companies
     description: Companies Pay Buddy has contact with. Contains both buyers and merchants. 
     columns:
       - name: company_id
@@ -57,7 +66,7 @@ models:
         tests:
           - not_null
   
-  - name: stg_pay_buddy__company_type.sql
+  - name: stg_pay_buddy__company_type
     description: A lookup table referencing whether Pay Buddy knows a company as a merchant or as a buyer.
     columns:
       - name: company_type_id
@@ -70,7 +79,7 @@ models:
         tests:
           - not_null
   
-  - name: stg_pay_buddy__decisions.sql
+  - name: stg_pay_buddy__decisions
     description: The decisions taken by Pay Buddy's credit engine.
     columns:
       - name: decision_id
@@ -87,7 +96,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__invoices.sql
+  - name: stg_pay_buddy__invoices
     description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted. 
     columns:
       - name: invoice_id
@@ -116,7 +125,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__orders.sql
+  - name: stg_pay_buddy__orders
     description: Orders made by buyers on marketplaces operated by merchants. 
     columns:
       - name: order_id
@@ -145,7 +154,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__payment_plan_templates.sql
+  - name: stg_pay_buddy__payment_plan_templates
     description: Payment plan templates made available to merchants. 
     columns:
       - name: payment_plan_template_id
@@ -162,7 +171,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__payment_plans.sql
+  - name: stg_pay_buddy__payment_plans
     description: The payment plans buyers may pick from. 
     columns:
       - name: payment_plan_id
@@ -183,7 +192,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_pay_buddy__repayments.sql
+  - name: stg_pay_buddy__repayments
     description: Repayments made to Pay Buddy by buyers. 
     columns:
       - name: repayment_id
