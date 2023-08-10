@@ -12,6 +12,7 @@ SELECT *
 FROM {{ref('stg_pay_buddy__orders')}}
 )
 
+-- add buyer and merchant information
 , payment_plans AS (
 SELECT 
 p.payment_plan_id,

@@ -14,6 +14,7 @@ WITH merchant_companies AS (
   SELECT *
   FROM {{ref('fees')}} 
 )
+
 -- retrieve stats on orders 
 , aggregated_orders AS (
   SELECT 
@@ -21,12 +22,14 @@ WITH merchant_companies AS (
   COUNT(DISTINCT order_id) AS total_orders,
   COUNT(DISTINCT IF(is_accepted, order_id, NULL)) AS total_accepted_orders,
   COUNT(DISTINCT IF(NOT is_accepted, order_id, NULL)) AS total_refused_orders,
-  SUM(IF(is_accepted, order_amount,0)) AS total_order_amount,
+  SUM(order_amount) AS total_order_amount,
+  SUM(IF(is_accepted, order_amount,0)) AS total_accepted_order_amount,
   MIN(IF(is_accepted, order_date, NULL)) AS first_accepted_order_date,
   MAX(IF(is_accepted, order_date, NULL)) AS latest_accepted_order_date
   FROM orders
   GROUP BY 1 
 )
+
 -- retrieve stats on fees
 , aggregated_fees AS (
   SELECT 
@@ -36,6 +39,7 @@ WITH merchant_companies AS (
   GROUP BY 1
 )
 
+-- generate merchant level stats
 , merchants AS (
   SELECT
   c.company_id AS merchant_id,
@@ -46,6 +50,7 @@ WITH merchant_companies AS (
   o.total_accepted_orders,
   o.total_refused_orders,
   o.total_order_amount,
+  o.total_accepted_order_amount,
   o.first_accepted_order_date,
   o.latest_accepted_order_date,
   f.lifetime_value

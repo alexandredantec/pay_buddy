@@ -14,6 +14,7 @@ WITH buyer_companies AS (
   SELECT *
   FROM {{ref('invoices')}} 
 )
+
 -- retrieve stats on orders
 , aggregated_orders AS (
   SELECT 
@@ -21,12 +22,14 @@ WITH buyer_companies AS (
   COUNT(DISTINCT order_id) AS total_orders,
   COUNT(DISTINCT IF(is_accepted, order_id, NULL)) AS total_accepted_orders,
   COUNT(DISTINCT IF(NOT is_accepted, order_id, NULL)) AS total_refused_orders,
-  SUM(IF(is_accepted, order_amount,0)) AS total_order_amount,
+  SUM(order_amount) AS total_order_amount,
+  SUM(IF(is_accepted, order_amount,0)) AS total_accepted_order_amount,
   MIN(IF(is_accepted, order_date, NULL)) AS first_accepted_order_date,
   MAX(IF(is_accepted, order_date, NULL)) AS latest_accepted_order_date
   FROM orders
   GROUP BY 1 
 )
+
 -- retrieve stats on invoices 
 , aggregated_invoices AS (
   SELECT 
@@ -41,6 +44,7 @@ WITH buyer_companies AS (
   GROUP BY 1
 )
 
+-- generate buyer level stats
 , buyers AS (
   SELECT
   b.company_id AS buyer_id,
@@ -54,6 +58,7 @@ WITH buyer_companies AS (
   i.total_repaid_invoices,
   i.total_outstanding_invoices,
   o.total_order_amount,
+  total_accepted_order_amount,
   i.total_invoice_amount,
   i.total_repayment_amount,
   i.total_outstanding_amount,

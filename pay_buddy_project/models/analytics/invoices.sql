@@ -10,6 +10,7 @@ SELECT *
 FROM {{ref('int_pay_buddy__payment_plan_decisions')}}
 )
 
+-- add term in days to calculate invoice creation date
 , invoices_with_terms AS (
     SELECT 
   i.invoice_id,

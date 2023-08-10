@@ -12,6 +12,7 @@ SELECT *
 FROM {{ref('stg_pay_buddy__repayments')}}
 )
 
+-- group repayments by invoice
 , grouped_repayments AS (
 
 SELECT invoice_id
@@ -21,6 +22,7 @@ FROM repayments
 GROUP BY 1
 )
 
+-- cross invoice and repayment information
 , invoices_with_repayments AS (
   SELECT 
   i.invoice_id,

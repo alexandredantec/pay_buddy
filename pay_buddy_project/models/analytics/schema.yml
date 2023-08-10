@@ -29,7 +29,9 @@ models:
       - name: total_refused_orders
         description: The total number of refused orders made by the buyer.
       - name: total_order_amount
-        description: The total amount of all orders made by the buyer. 
+        description: The total amount of all orders made by the buyer.
+      - name: total_accepted_order_amount
+        description: The total amount of all accepted orders made by the buyer.  
       - name: total_invoice_amount
         description: The total amount of all invoices issued to the buyer.
       - name: total_repayment_amount
@@ -113,6 +115,8 @@ models:
         description: The total number of refused orders made to the merchant.
       - name: total_order_amount
         description: The total amount of all orders made to the merchant. 
+      - name: total_accepted_order_amount
+        description: The total amount of all accepted orders made to the merchant. 
       - name: merchant_lifetime_value
         description: The total value of all fees billed to the merchant.
       - name: first_accepted_order_date

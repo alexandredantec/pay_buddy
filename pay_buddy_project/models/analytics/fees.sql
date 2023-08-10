@@ -10,6 +10,7 @@ SELECT *
 FROM {{ref('stg_pay_buddy__agreements')}}
 )
 
+-- calculate fees based on order amount and fee_percentage
 , order_fees AS (
 SELECT
 GENERATE_UUID() AS fee_id,
