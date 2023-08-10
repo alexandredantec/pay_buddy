@@ -2,89 +2,105 @@ version: 2
 
 models:
   - name: invoices.sql
-    description: "Invoices issued to buyers once a payment plan is accepted"
+    description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted.
     columns:
       - name: invoice_id
-        description: "The unique identifier identifying an invoice"
+        description: The unique identifier for an invoice. Primary key. 
         tests:
           - unique
           - not_null
       - name: buyer_id
-        description: "The unique identifier to identify the buyer"
+        description: The unique identifier for a buyer.
       - name: payment_plan_id
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The unique identifier for a payment plan.
       - name: invoice_amount
-        description: "The amount to be repaid to Pay Buddy"
+        description: The amount to be repaid to Pay Buddy.
       - name: repayment_amount
-        description: "The amount repaid (can be total or partial)"
+        description: The amount repaid, either total or partial.
       - name: invoice_currency
-        description: "The currency in which the invoice is issued"
+        description: The currency in which the invoice is issued.
       - name: repayment_due_date
-        description: "The date by which the invoice amount is to be repaid to Pay Buddy"
+        description: The date by which the invoice amount is to be repaid in full.
       - name: repayment_date
-        description: "The date on which this repayment is made"
+        description: The date on which a repayment is made.
   - name: orders.sql
-    description: "Final orders made by buyers once a decision is taken"
+    description: Orders made by buyers on marketplaces operated by merchants. 
     columns:
       - name: order_id
-        description: "The unique identifier identifying an order"
+        description: The unique identifier for an order. Primary key. 
         tests:
           - unique
           - not_null
       - name: buyer_id
-        description: "The unique identifier to identify the buyer"
+        description: The unique identifier for a buyer.
       - name: merchant_id
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The unique identifier for a merchant.
       - name: agreement_id
-        description: "The amount to be repaid to Pay Buddy"
+        description: The unique identifier for an agreement.
+      - name: order_currency
+        description: The currency in which the order is made.
       - name: order_amount
-        description: "The amount of the order"
+        description: The amount paid to merchant for the goods and services purchased.
       - name: order_date
-        description: "The amount repaid (can be total or partial)"
+        description: The date at which the order is made by the buyer.
       - name: is_accepted
-        description: "The currency in which the invoice is issued"
+        description: Whether an order is accepted or refused by Pay Buddy's decision engine. 
 
   - name: fees.sql
-    description: "Final orders made by buyers once a decision is taken"
+    description: Fees paid by merchants for Pay Buddy's service. 
     columns:
       - name: fee_id
-        description: "The unique identifier identifying an order"
+        description: The unique identifier for a fee. Primary key. 
         tests:
           - unique
           - not_null
       - name: merchant_id
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The unique identifier for a merchant. 
       - name: fee_percentage
         description: "The amount to be repaid to Pay Buddy"
       - name: order_amount
-        description: "The amount of the order"
+        description: The amount paid to the merchant for the goods and services purchased.
       - name: fee
-        description: "The amount of the fee"
+        description: The amount of the fee paid by the merchant to Pay Buddy. 
+ 
   - name: merchants.sql
-    description: "Merchants using the Pay Buddy service"
+    description: Merchants using the Pay Buddy service to accept payments. 
     columns:
       - name: merchant_id
-        description: "The unique identifier identifying a merchant"
+        description: The unique identifier for a merchant. Primary key.  
         tests:
           - unique
           - not_null
       - name: company_name
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The registered trading name of a company.
+        tests:
+          - not_null
       - name: company_country
-        description: "The country in which the company is registered"
-      - name: company_reference,
-        description: "The legal reference of the company"
+        description: The country in which a company is legally registered. 
+        tests:
+          - not_null
+      - name: company_reference
+        description: The reference to identify a company in legal registers.
+        tests:
+          - not_null
+  
   - name: buyers.sql
     description: "Buyers using the Pay Buddy service to purchase goods and services "
     columns:
       - name: buyer_id
-        description: "The unique identifier identifying a merchant"
+        description: The unique identifier for a buyer. Primary key.  
         tests:
           - unique
           - not_null
       - name: company_name
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The registered trading name of a company.
+        tests:
+          - not_null
       - name: company_country
-        description: "The country in which the company is registered"
-      - name: company_reference,
-        description: "The legal reference of the company"
+        description: The country in which a company is legally registered. 
+        tests:
+          - not_null
+      - name: company_reference
+        description: The reference to identify a company in legal registers.
+        tests:
+          - not_null

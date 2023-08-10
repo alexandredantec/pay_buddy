@@ -13,220 +13,197 @@ sources:
       - name: raw_payment_plan_templates
       - name: raw_payment_plans
       - name: raw_repayments
-      - name: exchange_rates_base_gbp
 
 models:
   - name: stg_pay_buddy__agreements.sql
-    description: "Agreements"
+    description: The agreements between merchants and Pay Buddy. 
     columns:
       - name: agreement_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for an agreement. Primary key. 
         tests:
           - unique
           - not_null
       - name: merchant_id
-        description: "The key to identify the merchant authorizing the payment scheme"
+        description: The unique identifier for an merchant.
         tests:
           - not_null
       - name: fee_percentage
-        description: "The percentage of the total transaction amount to be paid to Pay Buddy by the merchant"
+        description: The percentage of each succesful order to be paid to Pay Buddy by the merchant.
         tests:
           - not_null
 
   - name: stg_pay_buddy__companies.sql
-    description: "Companies using the pay buddy service"
+    description: Companies Pay Buddy has contact with. Contains both buyers and merchants. 
     columns:
       - name: company_id
-        description: "The unique identifier identifying a company"
+        description: The unique identifier for a company. Primary key. 
         tests:
           - unique
           - not_null
       - name: company_type_id
-        description: "The code lookup to identifying a company as either a merchant or a buyer"
+        description: The code lookup to identifying a company as either a merchant or a buyer.
         tests:
           - not_null
       - name: company_name
-        description: "The registered name of a company"
+        description: The registered trading name of a company.
         tests:
           - not_null
       - name: company_country
-        description: "The country in which a company is registered"
+        description: The country in which a company is legally registered. 
         tests:
           - not_null
       - name: company_reference
-        description: "The reference to identify a company in legal registers"
+        description: The reference to identify a company in legal registers.
         tests:
           - not_null
   
   - name: stg_pay_buddy__company_type.sql
-    description: "A table to identify whether a company uses Pay Buddy as a merchant or as a buyer"
+    description: A lookup table referencing whether Pay Buddy knows a company as a merchant or as a buyer.
     columns:
       - name: company_type_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for a company type. Primary key. 
         tests:
           - unique
           - not_null
       - name: company_type
-        description: "Whether a company uses Pay Buddy as a merchant or as a buyer"
+        description: Identifies a company as a merchant or a buyer.
         tests:
           - not_null
   
   - name: stg_pay_buddy__decisions.sql
-    description: "A table to keep track of decisions taken by Pay Buddy's credit engine"
+    description: The decisions taken by Pay Buddy's credit engine.
     columns:
       - name: decision_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for a decision. Primary key.  
         tests:
           - unique
           - not_null
       - name: decision_type
-        description: "Whether a payment plan was accepted or refused by Pay Buddy"
+        description: Whether a payment plan was accepted or refused by Pay Buddy. 
         tests:
           - not_null
       - name: decision_reason
-        description: "The precise reason for a decision if it is refused (or 'accept' if the payment plan is accepted)"
+        description: The precise reason for a decision if the payment plan is refused, 'accept' if  is accepted.
         tests:
           - not_null
 
   - name: stg_pay_buddy__invoices.sql
-    description: "A table to keep track of invoices issued by Pay Buddy to buyers"
+    description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted. 
     columns:
       - name: invoice_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for an invoice. Primary key. 
         tests:
           - unique
           - not_null
       - name: buyer_id
-        description: "The unique identifier to identify the buyer"
+        description: The unique identifier for a buyer.
         tests:
           - not_null
       - name: payment_plan_id
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The unique identifier for a payment plan.
         tests:
           - not_null
       - name: invoice_currency
-        description: "The currency in which the invoice is issued"
+        description: The currency in which the invoice is issued.
         tests:
           - not_null
       - name: invoice_amount
-        description: "The amount to be repaid to Pay Buddy"
+        description: The amount to be repaid to Pay Buddy.
         tests:
           - not_null
       - name: repayment_due_date
-        description: "The date by which the invoice amount is to be repaid to Pay Buddy"
+        description: The date by which the invoice amount is to be repaid in full. 
         tests:
           - not_null
 
   - name: stg_pay_buddy__orders.sql
-    description: "A table to keep track of orders made by buyers to merchants"
+    description: Orders made by buyers on marketplaces operated by merchants. 
     columns:
       - name: order_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for an order. Primary key. 
         tests:
           - unique
           - not_null
       - name: buyer_id
-        description: "The unique identifier to identify the buyer"
+        description: The unique identifier for a buyer. 
         tests:
           - not_null
       - name: merchant_id
-        description: "The unique identifier to identify the merchant"
+        description: The unique identifier for a merchant.
         tests:
           - not_null
       - name: order_currency
-        description: "The currency in which the order is made"
+        description: The currency in which the order is made.
         tests:
           - not_null
       - name: order_amount
-        description: "The amount to be paid to merchant for the goods or services ordered"
+        description: The amount paid to merchant for the goods and services purchased.
         tests:
           - not_null
       - name: order_date
-        description: "The date at which the order is made"
+        description: The date at which the order is made by the buyer.
         tests:
           - not_null
 
   - name: stg_pay_buddy__payment_plan_templates.sql
-    description: "A table to keep track of the payment plan templates made available to merchants"
+    description: Payment plan templates made available to merchants. 
     columns:
       - name: payment_plan_template_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for a payment plan template. Primary key. 
         tests:
           - unique
           - not_null
       - name: agreement_id
-        description: "The unique identifier to identify the agreement to which the template applies"
+        description: The unique identifier for an agreement.
         tests:
           - not_null
       - name: term_in_days
-        description: "The number of days before repayment is due in full"
+        description: The number of days before repayment is due in full.
         tests:
           - not_null
 
   - name: stg_pay_buddy__payment_plans.sql
-    description: "A table to keep track of the payment plans offered to buyers"
+    description: The payment plans buyers may pick from. 
     columns:
       - name: payment_plan_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for a payment plan. Primary key.  
         tests:
           - unique
           - not_null
       - name: order_id
-        description: "The unique identifier for the order for which this payment plan is offered"
+        description: The unique identifier for an order. 
         tests:
           - not_null
       - name: payment_plan_template_id
-        description: "The unique identifier for the payment plan template offered"
+        description: The unique identifier for a payment plan template.
         tests:
           - not_null
       - name: decision_id
-        description: "The unique identifier for the decision taken by Pay Buddy for this particular payment plan"
+        description: The unique identifier for a decision. 
         tests:
           - not_null
 
   - name: stg_pay_buddy__repayments.sql
-    description: "A table to keep track of the repayments made to Pay Buddy by buyers"
+    description: Repayments made to Pay Buddy by buyers. 
     columns:
       - name: repayment_id
-        description: "The unique identifier for this table"
+        description: The unique identifier for a repayment. Primary key.  
         tests:
           - unique
           - not_null
       - name: invoice_id
-        description: "The unique identifier for the invoice towards which this repayment is made"
+        description: The unique identifier for an invoice.
         tests:
           - not_null
       - name: repayment_currency
-        description: "The currency in which this repayment is made"
+        description: The currency in which a repayment is made.
         tests:
           - not_null
       - name: repayment_amount
-        description: "The amount repaid (can be total or partial)"
+        description: The amount repaid, either total or partial.
         tests:
           - not_null
       - name: repayment_date
-        description: "The date on which this repayment is made"
+        description: The date on which a repayment is made.
         tests:
           - not_null
-
-  - name: stg_currencies__gbp_exchange_rates.sql
-    description: "A table to keep track of the exchange rate to GBP for the various currencies buyers may pay in"
-    columns:
-      - name: unique_id
-        description: "The unique identifier for this table"
-        tests:
-          - unique
-          - not_null
-      - name: base_currency
-        description: "The currency in which the transaction takes place"
-        tests:
-          - not_null
-      - name: gbp_exchange_rate
-        description: "The conversion rate for GBP"
-        tests:
-          - not_null
-      - name: exchange_rate_date
-        description: "The date for which the exchange rate is valid"
-        tests:
-          - not_null
-
