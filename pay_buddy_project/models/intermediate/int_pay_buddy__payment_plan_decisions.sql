@@ -18,6 +18,7 @@ SELECT *
 FROM {{ref('stg_pay_buddy__decisions')}}
 )
 
+-- consolidaye payment plan, template, and decision information
 , payment_plans_with_decisions AS (
 SELECT 
 p.payment_plan_id,

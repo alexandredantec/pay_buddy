@@ -1,42 +1,35 @@
 -- invoices.sql
 
-WITH invoices AS (
-
+WITH invoices_and_repayments AS (
 SELECT * 
-FROM {{ref('stg_pay_buddy__invoices')}}
+FROM {{ref('int_pay_buddy__invoices_and_repayments')}}
 )
 
-, repayments AS (
-
+, payment_plans AS (
 SELECT *
-FROM {{ref('stg_pay_buddy__repayments')}}
+FROM {{ref('int_pay_buddy__payment_plan_decisions')}}
 )
 
-, grouped_repayments AS (
-
-SELECT invoice_id
-, SUM(repayment_amount) AS repayment_amount
-, MAX(repayment_date) AS repayment_date
-FROM repayments
-GROUP BY 1
-)
-
-, invoices_with_repayments AS (
-  SELECT 
+-- add term in days to calculate invoice creation date
+, invoices_with_terms AS (
+    SELECT 
   i.invoice_id,
   i.buyer_id,
   i.payment_plan_id,
-  i.invoice_amount,
-  COALESCE(repayment_amount, 0) AS repayment_amount,
-  invoice_amount - COALESCE(repayment_amount, 0) AS outstanding_amount,
   i.invoice_currency,
+  i.invoice_amount,
+  i.repayment_amount,
+  i.outstanding_amount,
+  p.term_in_days,
+  IF(outstanding_amount = 0, 0, DATE_DIFF(CURRENT_DATE(),  i.repayment_due_date, DAY)) AS overdue_duration_in_days,
   i.repayment_due_date,
-  r.repayment_date
-  FROM invoices AS i
-  LEFT JOIN grouped_repayments AS r ON r.invoice_id = i.invoice_id
-  
+  DATE_SUB(i.repayment_due_date, INTERVAL p.term_in_days DAY) AS invoice_creation_date,
+  i.latest_repayment_date,
+  IF(outstanding_amount > 0, TRUE, FALSE) AS is_outstanding
+  FROM invoices_and_repayments AS i
+  JOIN payment_plans AS p ON p.payment_plan_id = i.payment_plan_id 
 )
 
 SELECT *
  
-FROM invoices_with_repayments
+FROM invoices_with_terms

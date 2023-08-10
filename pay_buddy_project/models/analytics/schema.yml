@@ -1,90 +1,171 @@
 version: 2
 
 models:
-  - name: invoices.sql
-    description: "Invoices issued to buyers once a payment plan is accepted"
-    columns:
-      - name: invoice_id
-        description: "The unique identifier identifying an invoice"
-        tests:
-          - unique
-          - not_null
-      - name: buyer_id
-        description: "The unique identifier to identify the buyer"
-      - name: payment_plan_id
-        description: "The unique identifier to identify the payment plan chosen"
-      - name: invoice_amount
-        description: "The amount to be repaid to Pay Buddy"
-      - name: repayment_amount
-        description: "The amount repaid (can be total or partial)"
-      - name: invoice_currency
-        description: "The currency in which the invoice is issued"
-      - name: repayment_due_date
-        description: "The date by which the invoice amount is to be repaid to Pay Buddy"
-      - name: repayment_date
-        description: "The date on which this repayment is made"
-  - name: orders.sql
-    description: "Final orders made by buyers once a decision is taken"
-    columns:
-      - name: order_id
-        description: "The unique identifier identifying an order"
-        tests:
-          - unique
-          - not_null
-      - name: buyer_id
-        description: "The unique identifier to identify the buyer"
-      - name: merchant_id
-        description: "The unique identifier to identify the payment plan chosen"
-      - name: agreement_id
-        description: "The amount to be repaid to Pay Buddy"
-      - name: order_amount
-        description: "The amount of the order"
-      - name: order_date
-        description: "The amount repaid (can be total or partial)"
-      - name: is_accepted
-        description: "The currency in which the invoice is issued"
 
-  - name: fees.sql
-    description: "Final orders made by buyers once a decision is taken"
-    columns:
-      - name: fee_id
-        description: "The unique identifier identifying an order"
-        tests:
-          - unique
-          - not_null
-      - name: merchant_id
-        description: "The unique identifier to identify the payment plan chosen"
-      - name: fee_percentage
-        description: "The amount to be repaid to Pay Buddy"
-      - name: order_amount
-        description: "The amount of the order"
-      - name: fee
-        description: "The amount of the fee"
-  - name: merchants.sql
-    description: "Merchants using the Pay Buddy service"
-    columns:
-      - name: merchant_id
-        description: "The unique identifier identifying a merchant"
-        tests:
-          - unique
-          - not_null
-      - name: company_name
-        description: "The unique identifier to identify the payment plan chosen"
-      - name: company_country
-        description: "The country in which the company is registered"
-      - name: company_reference,
-        description: "The legal reference of the company"
-  - name: buyers.sql
+  - name: buyers
     description: "Buyers using the Pay Buddy service to purchase goods and services "
     columns:
       - name: buyer_id
-        description: "The unique identifier identifying a merchant"
+        description: The unique identifier for a buyer. Primary key.  
         tests:
           - unique
           - not_null
       - name: company_name
-        description: "The unique identifier to identify the payment plan chosen"
+        description: The registered trading name of a company.
       - name: company_country
-        description: "The country in which the company is registered"
-      - name: company_reference,
-        description: "The legal reference of the company"
+        description: The country in which a company is legally registered. 
+      - name: company_reference
+        description: The reference to identify a company in legal registers.
+      - name: total_orders
+        description: The total number of orders made by the buyer.
+      - name: total_accepted_orders
+        description: The total number of accepted orders made by the buyer.
+      - name: total_invoices
+        description: The total number of invoices issued to the buyer.
+      - name: total_repaid_invoices
+        description: The total number of invoices repaid by the buyer.
+      - name: total_outstanding_invoices
+        description: The total number of invoices yet to be repaid by the buyer.
+      - name: total_refused_orders
+        description: The total number of refused orders made by the buyer.
+      - name: total_order_amount
+        description: The total amount of all orders made by the buyer.
+      - name: total_accepted_order_amount
+        description: The total amount of all accepted orders made by the buyer.  
+      - name: total_invoice_amount
+        description: The total amount of all invoices issued to the buyer.
+      - name: total_repayment_amount
+        description: The total amount of all repayments made by the buyer. 
+      - name: total_outstanding_amount
+        description: The total amount yet to be repaid the buyer.
+      - name: first_accepted_order_date
+        description: The date of the first accepted order made by the buyer. 
+      - name: latest_accepted_order_date
+        description: The date of the latest accepted order made by the buyer.
+
+  - name: invoices
+    description: Invoices issued by Pay Buddy to buyers whose payment plan was accepted.
+    columns:
+      - name: invoice_id
+        description: The unique identifier for an invoice. Primary key. 
+        tests:
+          - unique
+          - not_null
+      - name: buyer_id
+        description: The unique identifier for a buyer.
+      - name: payment_plan_id
+        description: The unique identifier for a payment plan.
+      - name: invoice_currency
+        description: The currency in which the invoice is issued.
+      - name: invoice_amount
+        description: The amount to be repaid to Pay Buddy.
+      - name: repayment_amount
+        description: The amount repaid, either total or partial.
+      - name: outstanding_amount
+        description: The amount repaid, either total or partial.
+      - name: term_in_days
+        description: The number of days before repayment is due in full.
+      - name: repayment_due_date
+        description: The date by which the invoice amount is to be repaid in full.
+      - name: invoice_creation_date
+        description: The date on which the invoice was created.
+      - name: latest_repayment_date
+        description: The date on which the latest repayment is made.
+      - name: is_outstanding
+        description: Whether an invoice remains outstanding.
+
+  - name: fees
+    description: Fees paid by merchants for Pay Buddy's service. 
+    columns:
+      - name: fee_id
+        description: The unique identifier for a fee. Primary key. 
+        tests:
+          - unique
+          - not_null
+      - name: merchant_id
+        description: The unique identifier for a merchant. 
+      - name: fee_percentage
+        description: "The amount to be repaid to Pay Buddy"
+      - name: order_amount
+        description: The amount paid to the merchant for the goods and services purchased.
+      - name: fee
+        description: The amount of the fee paid by the merchant to Pay Buddy.
+      - name: order_date
+        description: The date at which the order associated to the fee was made. 
+ 
+  - name: merchants
+    description: Merchants using the Pay Buddy service to accept payments. 
+    columns:
+      - name: merchant_id
+        description: The unique identifier for a merchant. Primary key.  
+        tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: The registered trading name of a company.
+      - name: company_country
+        description: The country in which a company is legally registered. 
+      - name: company_reference
+        description: The reference to identify a company in legal registers.
+      - name: total_orders
+        description: The total number of orders received by the merchant.
+      - name: total_accepted_orders
+        description: The total number of accepted orders made to the merchant.
+      - name: total_refused_orders
+        description: The total number of refused orders made to the merchant.
+      - name: total_order_amount
+        description: The total amount of all orders made to the merchant. 
+      - name: total_accepted_order_amount
+        description: The total amount of all accepted orders made to the merchant. 
+      - name: merchant_lifetime_value
+        description: The total value of all fees billed to the merchant.
+      - name: first_accepted_order_date
+        description: The date of the first accepted order made to the merchant. 
+      - name: latest_accepted_order_date
+        description: The date of the latest accepted order made to the merchant.
+
+  - name: orders
+    description: Orders made by buyers on marketplaces operated by merchants. 
+    columns:
+      - name: order_id
+        description: The unique identifier for an order. Primary key. 
+        tests:
+          - unique
+          - not_null
+      - name: buyer_id
+        description: The unique identifier for a buyer.
+      - name: merchant_id
+        description: The unique identifier for a merchant.
+      - name: agreement_id
+        description: The unique identifier for an agreement.
+      - name: order_currency
+        description: The currency in which the order is made.
+      - name: order_amount
+        description: The amount paid to merchant for the goods and services purchased.
+      - name: order_date
+        description: The date at which the order is made by the buyer.
+      - name: is_accepted
+        description: Whether an order is accepted or refused by Pay Buddy's decision engine. 
+
+  - name: payment_plans
+    description: Payment plans offered with the decisions taken by Pay Buddy's credit score engine. 
+    columns:
+      - name: payment_plan_id
+        description: The unique identifier for a payment plan. Primary key. 
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: The unique identifier for an order.
+      - name: merchant_id
+        description: The unique identifier for a merchant.
+      - name: buyer_id
+        description: The unique identifier for a buyer. 
+      - name: agreement_id
+        description: The unique identifier for an agreement.
+      - name: decision_type
+        description: Whether a payment plan was accepted or refused by Pay Buddy. 
+      - name: decision_reason
+        description: The precise reason for a decision if the payment plan is refused, 'accept' if  is accepted.
+      - name: term_in_days
+        description: The number of days before repayment is due in full.
