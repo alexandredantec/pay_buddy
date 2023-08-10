@@ -16,6 +16,18 @@ models:
         description: The country in which a company is legally registered. 
       - name: company_reference
         description: The reference to identify a company in legal registers.
+      - name: total_orders
+        description: The total number of orders made by the buyer.
+      - name: total_accepted_orders
+        description: The total number of accepted orders made by the buyer.
+      - name: total_invoices
+        description: The total number of invoices issued to the buyer.
+      - name: total_repaid_invoices
+        description: The total number of invoices repaid by the buyer.
+      - name: total_outstanding_invoices
+        description: The total number of invoices yet to be repaid by the buyer.
+      - name: total_refused_orders
+        description: The total number of refused orders made by the buyer.
       - name: total_order_amount
         description: The total amount of all orders made by the buyer. 
       - name: total_invoice_amount
@@ -57,6 +69,8 @@ models:
         description: The date on which the invoice was created.
       - name: latest_repayment_date
         description: The date on which the latest repayment is made.
+      - name: is_outstanding
+        description: Whether an invoice remains outstanding.
 
   - name: fees
     description: Fees paid by merchants for Pay Buddy's service. 
@@ -73,7 +87,9 @@ models:
       - name: order_amount
         description: The amount paid to the merchant for the goods and services purchased.
       - name: fee
-        description: The amount of the fee paid by the merchant to Pay Buddy. 
+        description: The amount of the fee paid by the merchant to Pay Buddy.
+      - name: order_date
+        description: The date at which the order associated to the fee was made. 
  
   - name: merchants
     description: Merchants using the Pay Buddy service to accept payments. 
@@ -89,6 +105,12 @@ models:
         description: The country in which a company is legally registered. 
       - name: company_reference
         description: The reference to identify a company in legal registers.
+      - name: total_orders
+        description: The total number of orders received by the merchant.
+      - name: total_accepted_orders
+        description: The total number of accepted orders made to the merchant.
+      - name: total_refused_orders
+        description: The total number of refused orders made to the merchant.
       - name: total_order_amount
         description: The total amount of all orders made to the merchant. 
       - name: merchant_lifetime_value

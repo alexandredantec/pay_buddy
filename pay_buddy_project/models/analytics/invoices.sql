@@ -23,7 +23,8 @@ FROM {{ref('int_pay_buddy__payment_plan_decisions')}}
   IF(outstanding_amount = 0, 0, DATE_DIFF(CURRENT_DATE(),  i.repayment_due_date, DAY)) AS overdue_duration_in_days,
   i.repayment_due_date,
   DATE_SUB(i.repayment_due_date, INTERVAL p.term_in_days DAY) AS invoice_creation_date,
-  i.latest_repayment_date
+  i.latest_repayment_date,
+  IF(outstanding_amount > 0, TRUE, FALSE) AS is_outstanding
   FROM invoices_and_repayments AS i
   JOIN payment_plans AS p ON p.payment_plan_id = i.payment_plan_id 
 )

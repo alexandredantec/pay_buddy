@@ -32,7 +32,8 @@ WITH buyer_companies AS (
   SELECT 
   buyer_id,
   COUNT(DISTINCT invoice_id) AS total_invoices,
-  COUNT(DISTINCT IF(outstanding_amount = 0,invoice_id,NULL)) AS total_repaid_invoices,
+  COUNT(DISTINCT IF(NOT is_outstanding,invoice_id,NULL)) AS total_repaid_invoices,
+  COUNT(DISTINCT IF(is_outstanding,invoice_id,NULL)) AS total_outstanding_invoices,
   SUM(invoice_amount) AS total_invoice_amount,
   SUM(repayment_amount) AS total_repayment_amount,
   SUM(outstanding_amount) AS total_outstanding_amount
@@ -51,6 +52,7 @@ WITH buyer_companies AS (
   o.total_refused_orders,
   i.total_invoices,
   i.total_repaid_invoices,
+  i.total_outstanding_invoices,
   o.total_order_amount,
   i.total_invoice_amount,
   i.total_repayment_amount,
