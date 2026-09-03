@@ -21,7 +21,7 @@ ROUND((fee_percentage / 100) * order_amount, 2) AS fee_amount,
 o.order_date
 FROM orders AS o
 LEFT JOIN agreements AS p ON p.agreement_id = o.agreement_id
-WHERE TRUE AND o.is_accepted IS TRUE
+WHERE TRUE AND o.order_status = 'accepted'
 )
 
 SELECT

@@ -20,12 +20,14 @@ WITH merchant_companies AS (
   SELECT 
   merchant_id,
   COUNT(DISTINCT order_id) AS total_orders,
-  COUNT(DISTINCT IF(is_accepted, order_id, NULL)) AS total_accepted_orders,
-  COUNT(DISTINCT IF(NOT is_accepted, order_id, NULL)) AS total_refused_orders,
+  COUNT(DISTINCT IF(order_status = 'accepted', order_id, NULL)) AS total_accepted_orders,
+  COUNT(DISTINCT IF(order_status = 'refused', order_id, NULL)) AS total_refused_orders,
+  COUNT(DISTINCT IF(order_status = 'pending', order_id, NULL)) AS total_pending_orders,
   SUM(order_amount) AS total_order_amount,
-  SUM(IF(is_accepted, order_amount,0)) AS total_accepted_order_amount,
-  MIN(IF(is_accepted, order_date, NULL)) AS first_accepted_order_date,
-  MAX(IF(is_accepted, order_date, NULL)) AS latest_accepted_order_date
+  SUM(IF(order_status = 'accepted', order_amount,0)) AS total_accepted_order_amount,
+  SUM(IF(order_status = 'pending', order_amount,0)) AS total_pending_order_amount,
+  MIN(IF(order_status = 'accepted', order_date, NULL)) AS first_accepted_order_date,
+  MAX(IF(order_status = 'accepted', order_date, NULL)) AS latest_accepted_order_date
   FROM orders
   GROUP BY 1 
 )
@@ -49,8 +51,10 @@ WITH merchant_companies AS (
   o.total_orders,
   o.total_accepted_orders,
   o.total_refused_orders,
+  o.total_pending_orders,
   o.total_order_amount,
   o.total_accepted_order_amount,
+  o.total_pending_order_amount,
   o.first_accepted_order_date,
   o.latest_accepted_order_date,
   f.lifetime_value

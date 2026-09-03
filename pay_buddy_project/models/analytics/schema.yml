@@ -28,10 +28,14 @@ models:
         description: The total number of invoices yet to be repaid by the buyer.
       - name: total_refused_orders
         description: The total number of refused orders made by the buyer.
+      - name: total_pending_orders
+        description: The total number of orders made by the buyer that have not yet received a decision from Pay Buddy's credit engine.
       - name: total_order_amount
         description: The total amount of all orders made by the buyer.
       - name: total_accepted_order_amount
-        description: The total amount of all accepted orders made by the buyer.  
+        description: The total amount of all accepted orders made by the buyer.
+      - name: total_pending_order_amount
+        description: The total amount of all orders made by the buyer that have not yet received a decision from Pay Buddy's credit engine.
       - name: total_invoice_amount
         description: The total amount of all invoices issued to the buyer.
       - name: total_repayment_amount
@@ -113,10 +117,14 @@ models:
         description: The total number of accepted orders made to the merchant.
       - name: total_refused_orders
         description: The total number of refused orders made to the merchant.
+      - name: total_pending_orders
+        description: The total number of orders made to the merchant that have not yet received a decision from Pay Buddy's credit engine.
       - name: total_order_amount
-        description: The total amount of all orders made to the merchant. 
+        description: The total amount of all orders made to the merchant.
       - name: total_accepted_order_amount
-        description: The total amount of all accepted orders made to the merchant. 
+        description: The total amount of all accepted orders made to the merchant.
+      - name: total_pending_order_amount
+        description: The total amount of all orders made to the merchant that have not yet received a decision from Pay Buddy's credit engine.
       - name: merchant_lifetime_value
         description: The total value of all fees billed to the merchant.
       - name: first_accepted_order_date
@@ -144,8 +152,12 @@ models:
         description: The amount paid to merchant for the goods and services purchased.
       - name: order_date
         description: The date at which the order is made by the buyer.
-      - name: is_accepted
-        description: Whether an order is accepted or refused by Pay Buddy's decision engine. 
+      - name: order_status
+        description: "Whether an order is 'accepted' or 'refused' by Pay Buddy's decision engine, or 'pending' if no decision has been made yet."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['accepted', 'refused', 'pending']
 
   - name: payment_plans
     description: Payment plans offered with the decisions taken by Pay Buddy's credit score engine. 

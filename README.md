@@ -88,8 +88,8 @@ or
 
 ```SQL
 SELECT 
-COUNT(DISTINCT IF(is_accepted, order_id, NULL)) / COUNT(DISTINCT order_id) AS percentage_accepted_orders,
-COUNT(DISTINCT IF(NOT is_accepted, order_id, NULL)) / COUNT(DISTINCT order_id) AS percentage_refused_orders
+COUNT(DISTINCT IF(order_status = 'accepted', order_id, NULL)) / COUNT(DISTINCT order_id) AS percentage_accepted_orders,
+COUNT(DISTINCT IF(order_status = 'refused', order_id, NULL)) / COUNT(DISTINCT order_id) AS percentage_refused_orders
 FROM `pay-buddy-dbt-project.pay_buddy_schema.orders`
 ```
 the latter is markedly more complex for a non technical user, but is necessary when adding time filters or grouping by date. 
@@ -117,8 +117,8 @@ or
 
 ```SQL
 SELECT 
-COUNT(DISTINCT IF(is_accepted, order_id, NULL)) AS total_accepted_orders,
-SUM(IF(is_accepted, order_amount,0)) AS total_accepted_order_amount
+COUNT(DISTINCT IF(order_status = 'accepted', order_id, NULL)) AS total_accepted_orders,
+SUM(IF(order_status = 'accepted', order_amount,0)) AS total_accepted_order_amount
 FROM `pay-buddy-dbt-project.pay_buddy_schema.orders`
 ```
 here also, the latter query is necessary when adding time filters or grouping by date. 
